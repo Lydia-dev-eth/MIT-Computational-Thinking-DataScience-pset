@@ -118,6 +118,7 @@ def get_best_path(digraph, start, end, path,max_total_dist, max_dist_outdoors, b
         If there exists no path that satisfies max_total_dist and
         max_dist_outdoors constraints, then return None.
     """
+    path[0]= path[0]+[start]
     if start==end:
         return (path[0],path[1])
     
@@ -129,7 +130,7 @@ def get_best_path(digraph, start, end, path,max_total_dist, max_dist_outdoors, b
             if new_outdoor<=max_dist_outdoors and new_total<max_total_dist:
               
                 
-                new_path= get_best_path(digraph, str(edge.get_destination()), end,[path[0] + [str(edge.get_destination())], new_total, new_outdoor],max_total_dist , max_dist_outdoors, best_dist,
+                new_path= get_best_path(digraph, str(edge.get_destination()), end,[path[0] , new_total, new_outdoor],max_total_dist , max_dist_outdoors, best_dist,
                   best_path)
                 if new_path is not None:
                  if best_path is None or new_path[1] < best_dist:
@@ -171,7 +172,7 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
         If there exists no path that satisfies max_total_dist and
         max_dist_outdoors constraints, then raises a ValueError.
     """ 
-    path = [[start], 0, 0]
+    path = [[], 0, 0]
     result=get_best_path(digraph,start,end,path,max_total_dist,max_dist_outdoors,float("inf"),None)
 
     if result == None:
